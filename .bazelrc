@@ -1,0 +1,10 @@
+common --java_runtime_version=remotejdk_11
+build --incompatible_strict_action_env
+
+
+#Per repository overrides, per user
+try-import %workspace%/user.bazelrc
+
+
+# Try keep macos more pure in the sandbox by blocking usr local entirely.
+build:macos --sandbox_block_path=/usr/local
