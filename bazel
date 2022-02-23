@@ -18,13 +18,17 @@ else
   exit 1
 fi
 
-BAZELISK_VERSION=v1.7.2
+BAZELISK_VERSION=v1.11.0
 
-
-DOWNLOAD_URL="https://github.com/bazelbuild/bazelisk/releases/download/${BAZELISK_VERSION}/bazelisk-${BAZEL_LAUNCHER_PLATFORM_NAME}-amd64"
 EXPECTED_BINARY_LOCATION="$BAZEL_BIN_LOC/$BAZELISK_VERSION"
-
+echo $EXPECTED_BINARY_LOCATION
 if [ ! -f "$EXPECTED_BINARY_LOCATION" ]; then
+  ARCH="$(uname -m)"
+  suffix="amd64"
+  if [ "$ARCH" == "arm64" ]; then
+    suffix="arm64"
+  fi
+  DOWNLOAD_URL="https://github.com/bazelbuild/bazelisk/releases/download/${BAZELISK_VERSION}/bazelisk-${BAZEL_LAUNCHER_PLATFORM_NAME}-${suffix}"
   curl -f -L -o "$EXPECTED_BINARY_LOCATION" "$DOWNLOAD_URL"
   chmod +x $EXPECTED_BINARY_LOCATION
 fi

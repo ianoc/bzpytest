@@ -1,6 +1,8 @@
-build --java_runtime_version=remotejdk_11
+build --java_runtime_version=remotejdk_8
 build --incompatible_strict_action_env
-
+build --java_language_version=8
+build --java_runtime_version=8
+build --tool_java_runtime_version=8
 
 #Per repository overrides, per user
 try-import %workspace%/user.bazelrc
@@ -8,3 +10,8 @@ try-import %workspace%/user.bazelrc
 
 # Try keep macos more pure in the sandbox by blocking usr local entirely.
 build:macos --sandbox_block_path=/usr/local
+
+
+
+# Rules scala seems to need this.
+build --incompatible_java_common_parameters=false
